@@ -34,3 +34,15 @@
 [submodule "tests/imgui/imgui"]
 	path = tests/imgui/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "nccc"]
+	path = nccc
+	url = https://github.com/okuoku/nccc
+[submodule "yuniframe"]
+	path = yuniframe
+	url = https://github.com/okuoku/yuniframe
+[submodule "cwgl"]
+	path = cwgl
+	url = https://github.com/okuoku/cwgl
+[submodule "coal"]
+	path = coal
+	url = https://github.com/okuoku/coal
