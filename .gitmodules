@@ -31,9 +31,6 @@
 [submodule "ext/platform/SDL2"]
 	path = ext/platform/SDL2
 	url = https://github.com/libsdl-org/SDL
-[submodule "tests/imgui/imgui"]
-	path = tests/imgui/imgui
-	url = https://github.com/ocornut/imgui
 [submodule "nccc"]
 	path = nccc
 	url = https://github.com/okuoku/nccc
