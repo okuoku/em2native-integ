@@ -10,5 +10,9 @@ foreach(r ${repos})
 endforeach()
 
 execute_process(COMMAND
+    git remote set-url --push origin git@github.com:okuoku/angle-static-cmake
+    WORKING_DIRECTORY ${root}/ext/cwgl/angle-static-cmake)
+
+execute_process(COMMAND
     git remote set-url --push origin git@github.com:okuoku/em2native-integ
     WORKING_DIRECTORY ${root})
