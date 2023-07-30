@@ -21,7 +21,9 @@ set(SPIRV_SKIP_EXECUTABLES ON CACHE BOOL "" FORCE)
 if(APPLE)
     message(STATUS "Enforcing python executable at /usr/bin")
     set(PYTHON_EXECUTABLE "/usr/bin/python3" CACHE STRING "" FORCE)
+    set(CMAKE_MACOSX_RPATH ON)
 endif()
+
 add_subdirectory(${root}/SPIRV-Tools SPIRV-Tools)
 
 
