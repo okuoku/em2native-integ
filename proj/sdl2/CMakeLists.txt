@@ -10,6 +10,8 @@ if(APPLE)
     # FIXME: Metal detection do not work on upstream SDL
     #        we don't have to bothered with auto detection anyway, anyhow
     set(HAVE_FRAMEWORK_METAL ON CACHE BOOL "" FORCE)
+    # Tentative.
+    add_definitions(-DSDL_USE_BUILTIN_OPENGL_DEFINITIONS)
 endif()
 
 # Setup SDL2 headers
