@@ -22,8 +22,15 @@ else()
     message(FATAL_ERROR "Could not determine ANGLE backend")
 endif()
 
+# For compat.
+if(${ANGLE_BACKEND} STREQUAL DirectX)
+    set(ANGLE_BACKEND_N DirectX11)
+else()
+    set(ANGLE_BACKEND_N ${ANGLE_BACKEND})
+endif()
+
 set(ANGLE_ROOT ${root}/angle)
 set(CHROMIUM_ZLIB_ROOT ${root}/chromium-zlib)
 set(ANGLE_WORKAROUND_FAKEOBJCSOURCE ON)
-yfrm_add_subproject(ANGLE ${root}/angle-static-cmake angle
+yfrm_add_subproject(ANGLE-${ANGLE_BACKEND_N} ${root}/angle-static-cmake angle
     angle_static)

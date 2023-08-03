@@ -8,9 +8,17 @@ set(SPIRV-Headers_SOURCE_DIR ${root}/SPIRV-Headers)
 set(SKIP_GLSLANG_INSTALL OFF CACHE BOOL "" FORCE)
 set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "" FORCE)
 
+set(YFRM_PREBUILT_DEPS_glslang
+    OGLCompiler OSDependent MachineIndependent
+    GenericCodeGen
+    )
+
 yfrm_add_subproject(GLSLANG ${root}/glslang glslang
-    # Exported library
-    glslang)
+    # Exported libraries
+    glslang
+    OGLCompiler OSDependent MachineIndependent
+    GenericCodeGen
+    )
 
 # Workaround for glslang-default-resource-limits
 set(glslang-resource-limits-srcs
@@ -44,9 +52,25 @@ if(YFRM_SUBPROJECT_BUILD OR
     # Also integrate SPIRV-Cross
     set(SPIRV_CROSS_CLI OFF CACHE BOOL "" FORCE)
     set(SPIRV_CROSS_SKIP_INSTALL ON CACHE BOOL "" FORCE)
+    set(YFRM_PREBUILT_DEPS_spirv-cross-c
+        spirv-cross-core
+        spirv-cross-glsl
+        spirv-cross-cpp
+        spirv-cross-hlsl
+        spirv-cross-msl
+        spirv-cross-util
+        spirv-cross-reflect
+        )
     yfrm_add_subproject(GLSLANG ${root}/SPIRV-Cross SPIRV-Cross
         # Exported libraries
         spirv-cross-c
+        spirv-cross-core
+        spirv-cross-glsl
+        spirv-cross-cpp
+        spirv-cross-hlsl
+        spirv-cross-msl
+        spirv-cross-util
+        spirv-cross-reflect
         )
 endif()
 

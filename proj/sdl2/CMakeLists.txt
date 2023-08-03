@@ -6,6 +6,7 @@ set(root ${CMAKE_CURRENT_LIST_DIR}/../../ext/platform)
 set(SDL_SHARED OFF CACHE BOOL "" FORCE)
 set(SDL_STATIC ON CACHE BOOL "" FORCE)
 set(LIBC ON CACHE BOOL "" FORCE)
+
 if(APPLE)
     # FIXME: Metal detection do not work on upstream SDL
     #        we don't have to bothered with auto detection anyway, anyhow
@@ -36,23 +37,68 @@ set(sdl2_headers
     )
 
 if(NOT YFRM_SDL2_PREFIX)
-    message(FATAL_ERROR "???")
+    message(STATUS "Skipping header generation(!YFRM_SDL2_PREFIX)")
+else()
+    set(headertgt)
+    foreach(e ${sdl2_headers})
+        set(input ${root}/SDL2/include/${e})
+        set(output ${YFRM_SDL2_PREFIX}/SDL2/${e})
+        add_custom_command(
+            OUTPUT ${output}
+            COMMAND ${CMAKE_COMMAND} -E copy ${input} ${output}
+            DEPENDS ${input})
+        list(APPEND headertgt ${output})
+    endforeach()
+    set(maybe_sdlcfg)
+    set(maybe_sdlcfg_in ${YFRM_BINARY_ROOT}/sdl2config/SDL_config.h)
+    if(YFRM_BINARY_ROOT AND EXISTS ${maybe_sdlcfg_in})
+        # Copy SDL_config.h as well
+        set(maybe_sdlcfg ${YFRM_SDL2_PREFIX}/SDL2/SDL_config.h)
+        add_custom_command(
+            OUTPUT ${maybe_sdlcfg}
+            COMMAND ${CMAKE_COMMAND} -E copy ${maybe_sdlcfg_in}
+            ${maybe_sdlcfg}
+            DEPENDS ${maybe_sdlcfg_in}
+            )
+    endif()
+    add_custom_target(sdl2headers DEPENDS ${headertgt} ${maybe_sdlcfg})
 endif()
 
-set(headertgt)
-foreach(e ${sdl2_headers})
-    set(input ${root}/SDL2/include/${e})
-    set(output ${YFRM_SDL2_PREFIX}/SDL2/${e})
-    add_custom_command(
-        OUTPUT ${output}
-        COMMAND ${CMAKE_COMMAND} -E copy ${input} ${output}
-        DEPENDS ${input})
-    list(APPEND headertgt ${output})
-endforeach()
-add_custom_target(sdl2headers DEPENDS ${headertgt})
+if(ANDROID)
+    set(deps
+        OpenSLES
+        dl
+        android
+        GLESv2 
+        GLESv1_CM
+        log)
+elseif(WIN32)
+    set(deps
+        winmm
+        CfgMgr32
+        Setupapi
+        Version
+        )
+else()
+    set(deps)
+endif()
+
+set(YFRM_PREBUILT_DEPS_SDL2-static ${deps})
 
 yfrm_add_subproject(SDL2 ${root}/SDL2 sdl2
     # Exported libraries
     SDL2-static
     SDL2main
     )
+
+# Special handling for SDL_config.h
+# We assume the file do not contain generator expression at all
+if(NOT YFRM_SDL2_PREFIX)
+    # Assume we're building prebuilt SDL2
+    execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory
+        ${YFRM_BINARY_ROOT}/sdl2config)
+
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_CURRENT_BINARY_DIR}/sdl2/SDL_config.h.intermediate
+        ${YFRM_BINARY_ROOT}/sdl2config/SDL_config.h)
+endif()
