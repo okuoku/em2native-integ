@@ -25,5 +25,5 @@ endif()
 set(ANGLE_ROOT ${root}/angle)
 set(CHROMIUM_ZLIB_ROOT ${root}/chromium-zlib)
 set(ANGLE_WORKAROUND_FAKEOBJCSOURCE ON)
-add_subdirectory(${root}/angle-static-cmake angle)
-
+yfrm_add_subproject(ANGLE ${root}/angle-static-cmake angle
+    angle_static)

@@ -51,6 +51,8 @@ foreach(e ${sdl2_headers})
 endforeach()
 add_custom_target(sdl2headers DEPENDS ${headertgt})
 
-add_subdirectory(${root}/SDL2 sdl2)
-
-
+yfrm_add_subproject(SDL2 ${root}/SDL2 sdl2
+    # Exported libraries
+    SDL2-static
+    SDL2main
+    )
