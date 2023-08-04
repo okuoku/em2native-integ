@@ -115,6 +115,11 @@ elseif(APPLE)
             "-framework Carbon"
             )
     endif()
+elseif(UNIX)
+    # Assume Mesa
+    set(deps
+
+        )
 else()
     set(deps)
 endif()

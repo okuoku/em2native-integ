@@ -9,8 +9,10 @@ set(SKIP_GLSLANG_INSTALL OFF CACHE BOOL "" FORCE)
 set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "" FORCE)
 
 set(YFRM_PREBUILT_DEPS_glslang
-    OGLCompiler OSDependent MachineIndependent
+    MachineIndependent
     GenericCodeGen
+    OGLCompiler 
+    OSDependent 
     )
 
 yfrm_add_subproject(GLSLANG ${root}/glslang glslang
@@ -39,13 +41,18 @@ if(APPLE)
     set(CMAKE_MACOSX_RPATH ON)
 endif()
 
+set(YFRM_PREBUILT_DEPS_SPIRV-Tools-opt
+    SPIRV
+    SPIRV-Tools
+    )
+
 yfrm_add_subproject(GLSLANG ${root}/SPIRV-Tools SPIRV-Tools
     # Exported libraries
+    SPIRV-Tools
     SPIRV-Tools-static
     SPIRV-Tools-opt
     SPIRV
     )
-
 
 if(YFRM_SUBPROJECT_BUILD OR 
         YFRM_CWGL_USE_METAL OR YFRM_CWGL_EXPERIMENTAL_TRACKER)
