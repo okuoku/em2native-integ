@@ -79,6 +79,42 @@ elseif(WIN32)
         Setupapi
         Version
         )
+elseif(APPLE)
+    set(deps
+        "-framework Foundation"
+        "-framework GameController"
+        "-framework Metal"
+        "-framework CoreAudio"
+        "-framework AudioToolbox"
+        "-framework CoreHaptics"
+        "-framework QuartzCore"
+        "-framework CoreGraphics"
+        "-framework CoreBluetooth"
+        iconv
+        )
+    if(NOT ${CMAKE_SYSTEM_NAME} STREQUAL tvOS)
+        list(APPEND deps 
+            "-framework IOKit"
+            "-framework CoreMotion"
+            )
+    endif()
+    if(${CMAKE_SYSTEM_NAME} STREQUAL tvOS OR
+            ${CMAKE_SYSTEM_NAME} STREQUAL iOS)
+        # Mobile
+        list(APPEND deps
+            "-framework OpenGLES"
+            "-framework AVFoundation"
+            "-framework UIKit"
+            )
+    else()
+        # Desktop(?)
+        list(APPEND deps
+            "-framework ForceFeedback"
+            "-framework Cocoa"
+            "-framework CoreVideo"
+            "-framework Carbon"
+            )
+    endif()
 else()
     set(deps)
 endif()
