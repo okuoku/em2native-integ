@@ -35,10 +35,10 @@ function(yfrm_add_subproject sym path dir)
                     endif()
                 endforeach()
             else()
-                # Single configuration generator(Not tested)
-                file(READ "${YFRM_BINARY_ROOT}/yfrm_lib_${sym}_${lib}.txt"
+                # Single configuration generator
+                file(READ "${YFRM_BINARY_ROOT}/yfrm_lib_${sym}_${lib}_${CMAKE_BUILD_TYPE}.txt"
                     f)
-                string(STRIP lin "${f}")
+                string(STRIP "${f}" lin)
                 if("${lin}" MATCHES "([^\t]*)\t(.*)")
                     set(bogus ${CMAKE_MATCH_1})
                     set(pth "${CMAKE_MATCH_2}")
