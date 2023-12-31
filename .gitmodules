@@ -43,3 +43,6 @@
 [submodule "coal"]
 	path = coal
 	url = https://github.com/okuoku/coal
+[submodule "ext/legacygl/tinygl-cmake"]
+	path = ext/legacygl/tinygl-cmake
+	url = https://github.com/okuoku/tinygl-cmake
