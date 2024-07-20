@@ -5,7 +5,7 @@ set(root ${CMAKE_CURRENT_LIST_DIR}/../../ext/platform)
 
 set(SDL_SHARED OFF CACHE BOOL "" FORCE)
 set(SDL_STATIC ON CACHE BOOL "" FORCE)
-set(LIBC ON CACHE BOOL "" FORCE)
+set(SDL_LIBC ON CACHE BOOL "" FORCE)
 
 if(APPLE)
     # FIXME: Metal detection do not work on upstream SDL
