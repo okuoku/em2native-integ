@@ -11,24 +11,8 @@ set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "" FORCE)
 set(YFRM_PREBUILT_DEPS_glslang
     MachineIndependent
     GenericCodeGen
-    OGLCompiler 
     OSDependent 
     )
-
-yfrm_add_subproject(GLSLANG ${root}/glslang glslang
-    # Exported libraries
-    glslang
-    OGLCompiler OSDependent MachineIndependent
-    GenericCodeGen
-    )
-
-# Workaround for glslang-default-resource-limits
-set(glslang-resource-limits-srcs
-    ${root}/glslang/StandAlone/ResourceLimits.cpp
-    ${root}/glslang/StandAlone/resource_limits_c.cpp)
-include_directories(${root}/glslang)
-add_library(my-glslang-default-resource-limits STATIC
-    ${glslang-resource-limits-srcs})
 
 set(SKIP_SPIRV_TOOLS_INSTALL OFF CACHE BOOL "" FORCE)
 set(SPIRV_SKIP_EXECUTABLES ON CACHE BOOL "" FORCE)
@@ -53,6 +37,21 @@ yfrm_add_subproject(GLSLANG ${root}/SPIRV-Tools SPIRV-Tools
     SPIRV-Tools-opt
     SPIRV
     )
+
+yfrm_add_subproject(GLSLANG ${root}/glslang glslang
+    # Exported libraries
+    glslang
+    OSDependent MachineIndependent
+    GenericCodeGen
+    )
+
+# Workaround for glslang-default-resource-limits
+set(glslang-resource-limits-srcs
+    ${root}/glslang/glslang/ResourceLimits/ResourceLimits.cpp
+    ${root}/glslang/glslang/ResourceLimits/resource_limits_c.cpp)
+include_directories(${root}/glslang)
+add_library(my-glslang-default-resource-limits STATIC
+    ${glslang-resource-limits-srcs})
 
 if(YFRM_SUBPROJECT_BUILD OR 
         YFRM_CWGL_USE_METAL OR YFRM_CWGL_EXPERIMENTAL_TRACKER)
