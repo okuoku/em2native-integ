@@ -15,7 +15,7 @@
 	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
 [submodule "ext/cwgl/angle"]
 	path = ext/cwgl/angle
-	url = https://github.com/google/angle
+	url = https://android.googlesource.com/platform/external/angle
 [submodule "ext/cwgl/angle-static-cmake"]
 	path = ext/cwgl/angle-static-cmake
 	url = https://github.com/okuoku/angle-static-cmake
