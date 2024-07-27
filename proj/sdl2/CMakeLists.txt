@@ -77,11 +77,13 @@ endif()
 
 set(YFRM_PREBUILT_DEPS_SDL2-static ${deps})
 
-yfrm_add_subproject(SDL2 ${root}/SDL2 sdl2
-    # Exported libraries
-    SDL2-static
-    SDL2main
-    )
+if("${CMAKE_SYSTEM_NAME}" STREQUAL WindowsStore)
+    set(sdllibs SDL2-static)
+else()
+    set(sdllibs SDL2-static SDL2main)
+endif()
+
+yfrm_add_subproject(SDL2 ${root}/SDL2 sdl2 ${sdllibs})
 
 if(NOT YFRM_WITH_PREBUILT_LIBS)
     # Archive SDL2 headers as well
