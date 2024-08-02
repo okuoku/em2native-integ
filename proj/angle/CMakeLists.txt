@@ -22,14 +22,31 @@ else()
     message(FATAL_ERROR "Could not determine ANGLE backend")
 endif()
 
-# For compat.
+set(deps)
+
 if(${ANGLE_BACKEND} STREQUAL DirectX)
+    # For compat.
     set(ANGLE_BACKEND_N DirectX11)
+    list(APPEND deps dxgi dxguid)
 else()
     set(ANGLE_BACKEND_N ${ANGLE_BACKEND})
 endif()
 
+if(${ANGLE_BACKEND} STREQUAL Metal)
+    list(APPEND deps SPIRV-Tools-static)
+elseif(${ANGLE_BACKEND} STREQUAL Vulkan)
+    list(APPEND deps SPIRV-Tools-static)
+endif()
+if(APPLE)
+    list(APPEND deps "-framework IOSurface")
+endif()
+if(WIN32)
+    list(APPEND deps synchronization)
+endif()
+
 set(ANGLE_ROOT ${root}/angle)
 set(CHROMIUM_ZLIB_ROOT ${root}/chromium-zlib)
+
+set(YFRM_PREBUILT_DEPS_angle_static ${deps})
 yfrm_add_subproject(ANGLE-${ANGLE_BACKEND_N} ${root}/angle-static-cmake angle
     angle_static)
