@@ -26,6 +26,7 @@ if(ANDROID)
 elseif(WIN32)
     set(deps
         winmm
+        imm32
         CfgMgr32
         Setupapi
         Version
