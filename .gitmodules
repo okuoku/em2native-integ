@@ -46,3 +46,6 @@
 [submodule "ext/legacygl/tinygl-cmake"]
 	path = ext/legacygl/tinygl-cmake
 	url = https://github.com/okuoku/tinygl-cmake
+[submodule "ext/nccc/napi-sdkfiles"]
+	path = ext/nccc/napi-sdkfiles
+	url = https://github.com/okuoku/napi-sdkfiles
