@@ -28,9 +28,9 @@ elseif(WIN32)
     set(deps
         winmm
         imm32
-        CfgMgr32
-        Setupapi
-        Version
+        cfgmgr32
+        setupapi
+        version
         )
 elseif(APPLE)
     set(deps
