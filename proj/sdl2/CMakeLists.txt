@@ -68,6 +68,11 @@ elseif(APPLE)
             "-framework Carbon"
             )
     endif()
+elseif(LINUX)
+    set(deps
+        dl
+        pthread
+        )
 elseif(UNIX)
     # Assume Mesa
     set(deps
